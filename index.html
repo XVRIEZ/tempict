@@ -7,9 +7,11 @@
     <title>Photo Hosting Sementara</title>
 </head>
 <body>
-    <h1>Unggah Foto Sementara</h1>
-    <input type="file" id="fileInput" multiple>
-    <div id="gallery"></div>
+    <div class="container">
+        <h1>Nama Anda</h1>
+        <input type="file" id="fileInput" multiple>
+        <div id="gallery"></div>
+    </div>
 
     <script>
         const fileInput = document.getElementById('fileInput');
@@ -24,11 +26,12 @@
                 img.src = URL.createObjectURL(file);
                 img.classList.add('thumbnail');
 
-                // Buat nama link dengan format picfromxvriezX.jpg
                 const fileName = `picfromxvriez${index + 1}.jpg`;
-                img.alt = fileName; // Menyimpan nama sebagai alt text
+                img.alt = fileName;
 
-                // Buat tombol salin
+                const link = document.createElement('p');
+                link.textContent = `Link: ${fileName}`;
+                
                 const copyButton = document.createElement('button');
                 copyButton.textContent = 'Salin Link';
                 copyButton.onclick = () => {
@@ -42,6 +45,7 @@
                 };
 
                 gallery.appendChild(img);
+                gallery.appendChild(link);
                 gallery.appendChild(copyButton);
             });
         });
