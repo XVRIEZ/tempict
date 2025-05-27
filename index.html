@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Photo Hosting Sementara</title>
+</head>
+<body>
+    <h1>Unggah Foto Sementara</h1>
+    <input type="file" id="fileInput" multiple>
+    <div id="gallery"></div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const gallery = document.getElementById('gallery');
+
+        fileInput.addEventListener('change', (event) => {
+            const files = event.target.files;
+            gallery.innerHTML = ''; // kosongkan galeri sebelumnya
+
+            Array.from(files).forEach((file, index) => {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.classList.add('thumbnail');
+
+                // Buat nama link dengan format picfromxvriezX.jpg
+                const fileName = `picfromxvriez${index + 1}.jpg`;
+                img.alt = fileName; // Menyimpan nama sebagai alt text
+
+                // Buat tombol salin
+                const copyButton = document.createElement('button');
+                copyButton.textContent = 'Salin Link';
+                copyButton.onclick = () => {
+                    navigator.clipboard.writeText(fileName)
+                        .then(() => {
+                            alert(`Link ${fileName} telah disalin!`);
+                        })
+                        .catch(err => {
+                            console.error('Gagal menyalin link: ', err);
+                        });
+                };
+
+                gallery.appendChild(img);
+                gallery.appendChild(copyButton);
+            });
+        });
+    </script>
+</body>
+</html>
